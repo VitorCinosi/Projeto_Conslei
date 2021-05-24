@@ -1,6 +1,10 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable no-unused-vars */
+/* eslint-disable keyword-spacing */
+/* eslint-disable quotes */
+/* eslint-disable no-alert */
+/* eslint-disable space-infix-ops */
 
 
 import React, {useState, useContext} from 'react';
@@ -23,6 +27,8 @@ import {
 
 import SignInput from '../../components/SignInput';
 
+import Api from '../../Api';
+
 import ConsleiLogo from '../../assets/conslei-removebg-preview.svg';
 import EmailIcon from '../../assets/email.svg';
 import PersonIcon from '../../assets/person.svg';
@@ -38,11 +44,17 @@ export default () => {
     const [emailField, setEmailField] = useState('');
     const [passwordField, setPasswordField] = useState('');
 
-    const handleSignClick = () => {
+    const handleSignClick = async () => {
         if (nameField !== '' && emailField !== '' && passwordField !== '') {
+            let res = await Api.signUp(nameField, emailField, passwordField);
+            if(res.token) {
+                alert("Deu Certo!");
+            } else {
+                alert("Erro: "+res.error);
+            }
 
         } else {
-            // eslint-disable-next-line no-alert
+            
             alert('Preencha os campos');
         }
     };

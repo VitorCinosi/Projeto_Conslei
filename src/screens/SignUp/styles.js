@@ -52,6 +52,7 @@ export const SignMessageButtonTextH = styled.Text`
     margin-bottom: 5px; 
     textAlignVertical: top;
     
+    
 `;
 export const SignMessageButtonTextBoldH = styled.Text`
     font-size: 16px;

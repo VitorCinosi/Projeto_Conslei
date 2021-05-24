@@ -43,4 +43,8 @@ export const SignMessageButtonTextBold = styled.Text`
     font-weight: bold;
     margin-left: 5px;
 `;
+export const ScrollView = styled.SafeAreaView`
+    width: 100%;
+    padding: 40px;
+`;
 

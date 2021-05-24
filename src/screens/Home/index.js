@@ -20,6 +20,8 @@ import {
     LocationInput,
     LocationFinder,
 
+    LoadingIcon,
+
 
 } from './styles';
 
@@ -33,7 +35,7 @@ export default () => {
     const [locationText, setLocationText] = useState('');
     // eslint-disable-next-line no-unused-vars
     const [coords, setCoords] = useState(null);
-    // eslint-disable-next-line no-unused-vars
+
     const [loading, setLoading] = useState(false);
     // eslint-disable-next-line no-unused-vars
     const [list, setList] = useState([]);
@@ -55,10 +57,14 @@ export default () => {
 
             Geolocation.getCurrentPosition((info) =>{
                 setCoords(info.coords);
-                //getLeitos();
+                getLeitos();
             });
 
         }
+    };
+
+    const getLeitos = async () => {
+
     };
 
     return (
@@ -84,8 +90,9 @@ export default () => {
                     </LocationFinder>
                 </LocationArea>
 
-
-
+                {loading &&
+                <LoadingIcon size="large" color="#000" />
+                }
 
             </Scroller>
         </Container>

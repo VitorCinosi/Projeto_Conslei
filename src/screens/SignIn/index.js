@@ -1,10 +1,15 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-trailing-spaces */
+/* eslint-disable no-alert */
+/* eslint-disable keyword-spacing */
 
 
 
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-community/async-storage';
+import { UserContext } from '../../contexts/UserContext';
+
 import {
     Container,
     InputArea,
@@ -16,6 +21,8 @@ import {
 
 } from './styles';
 
+import Api from '../../Api';
+
 import SignInput from '../../components/SignInput';
 
 import ConsleiLogo from '../../assets/conslei-removebg-preview.svg';
@@ -24,22 +31,42 @@ import LockIcon from '../../assets/lock.svg';
 
 export default () => {
 
+    const { dispatch: userDispatch } = useContext(UserContext);
     const navigation = useNavigation();
 
     const [emailField, setEmailField] = useState('');
     const [passwordField, setPasswordField] = useState('');
 
-    const handleSignClick = () => {
+    const handleSignClick = async () => {
         navigation.reset({
             routes: [{name: 'MainTab'}],
         });
 
-        // if (emailField !== '' && passwordField !== ''){
+        if (emailField !== '' && passwordField !== ''){
 
-        // } else {
+            let json = await Api.signIn(emailField, passwordField);
+            if(json.token) {
+                await AsyncStorage.setItem('token', json.token);
+
+                userDispatch({
+                    type: 'setAvatar',
+                    payload:{
+                        avatar: json.avatar,
+                    },
+                });
+
+                navigation.reset({
+                    routes:[{name:'MainTab'}],
+                });
+
+            } else {
+                alert('Email e/ou senha errados!');
+            }
+
+        } else {
             
-        //     alert('Preencha os campos');
-        // }
+            alert('Preencha os campos');
+        }
     };
 
     const handleMessageButtonClick = () => {
